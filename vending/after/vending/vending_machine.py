@@ -52,6 +52,8 @@ class VendingMachine:
         self.refund_coins = Coins()
 
     def buy(self, input_coin: Coin, kind_of_drink: KindOfDrink) -> Drink:
+        # 会計係がお金を受け取る・お釣りを計算する・お釣りを出す
+        # 在庫管理が在庫を確認する・在庫を出す
         if not self.__can_use_coin(input_coin):
             self.refund_coins.add(input_coin)
             return None
