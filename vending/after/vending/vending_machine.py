@@ -1,4 +1,4 @@
-from vending.drink import Drink
+from vending.drink import Drink, KindOfDrink
 
 class VendingMachine:
     def __init__(self):
@@ -8,14 +8,14 @@ class VendingMachine:
         self.number_of_100yen = 10
         self.charge = 0
 
-    def buy(self, input_coin: int, kind_of_drink: int):
+    def buy(self, input_coin: int, kind_of_drink: KindOfDrink):
         if not self.__can_use_coin(input_coin):
             self.charge += input_coin
             return None
 
-        if (kind_of_drink == Drink.COKE and self.quantity_of_coke == 0) or \
-           (kind_of_drink == Drink.DIET_COKE and self.quantity_of_diet_coke == 0) or \
-           (kind_of_drink == Drink.TEA and self.quantity_of_tea == 0):
+        if (kind_of_drink == KindOfDrink.COKE and self.quantity_of_coke == 0) or \
+           (kind_of_drink == KindOfDrink.DIET_COKE and self.quantity_of_diet_coke == 0) or \
+           (kind_of_drink == KindOfDrink.TEA and self.quantity_of_tea == 0):
             self.charge += input_coin
             return None
 
@@ -29,11 +29,11 @@ class VendingMachine:
             self.charge += (input_coin - 100)
             self.number_of_100yen -= (input_coin - 100) // 100
 
-        if kind_of_drink == Drink.COKE:
+        if kind_of_drink == KindOfDrink.COKE:
             self.quantity_of_coke -= 1
             return Drink(kind_of_drink)
 
-        if kind_of_drink == Drink.DIET_COKE:
+        if kind_of_drink == KindOfDrink.DIET_COKE:
             self.quantity_of_diet_coke -= 1
             return Drink(kind_of_drink)
 
