@@ -9,7 +9,7 @@ class VendingMachine:
         self.charge = 0
 
     def buy(self, input_coin, kind_of_drink):
-        if input_coin not in [100, 500]:
+        if not self.__can_use_coin(input_coin):
             self.charge += input_coin
             return None
 
@@ -42,3 +42,6 @@ class VendingMachine:
         result = self.charge
         self.charge = 0
         return result
+    
+    def __can_use_coin(self, coin):
+        return coin in [100, 500]
