@@ -20,9 +20,9 @@ class Drinks:
         self.drinks.append(drink)
     
     def pick(self) -> Drink:
-        if self.get_quintity() == 0:
+        if self.get_quantity() == 0:
             return None
         return self.drinks.pop()
 
-    def get_quintity(self):
+    def get_quantity(self):
         return len(self.drinks)
