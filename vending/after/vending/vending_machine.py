@@ -8,26 +8,26 @@ class VendingMachine:
         self.number_of_100yen = 10
         self.charge = 0
 
-    def buy(self, i, kind_of_drink):
-        if i not in [100, 500]:
-            self.charge += i
+    def buy(self, input_coin, kind_of_drink):
+        if input_coin not in [100, 500]:
+            self.charge += input_coin
             return None
 
         if (kind_of_drink == Drink.COKE and self.quantity_of_coke == 0) or \
            (kind_of_drink == Drink.DIET_COKE and self.quantity_of_diet_coke == 0) or \
            (kind_of_drink == Drink.TEA and self.quantity_of_tea == 0):
-            self.charge += i
+            self.charge += input_coin
             return None
 
-        if i == 500 and self.number_of_100yen < 4:
-            self.charge += i
+        if input_coin == 500 and self.number_of_100yen < 4:
+            self.charge += input_coin
             return None
 
-        if i == 100:
+        if input_coin == 100:
             self.number_of_100yen += 1
-        elif i == 500:
-            self.charge += (i - 100)
-            self.number_of_100yen -= (i - 100) // 100
+        elif input_coin == 500:
+            self.charge += (input_coin - 100)
+            self.number_of_100yen -= (input_coin - 100) // 100
 
         if kind_of_drink == Drink.COKE:
             self.quantity_of_coke -= 1
