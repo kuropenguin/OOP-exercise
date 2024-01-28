@@ -62,22 +62,14 @@ class Accountant:
         return False
     
     
-    def accounting(self, input_coin: Coin):
-        # validation
-        if not self.is_valid_coin(input_coin):
-            return
-        if not self.can_return_change(input_coin):
-            return
-
+    def get_charge_coins(self, input_coin: Coin):
         # お釣りを計算して保持
         charge_coins_num = self.calc_charge_one_handread_coins_num(input_coin)
+        charge_coins = Coins()
         for _ in range(charge_coins_num):
             coin = self.one_handread_coins.pop()
-            self.charge_coins.add(coin)
-
-        # 受け取ったお金を保持
-        self.add_coin(input_coin)
-        return
+            charge_coins.add(coin)
+        return charge_coins
     
     def calc_charge_one_handread_coins_num(self, input_coin: Coin) -> int:
         return (input_coin.value - Coin.ONE_HUNDRED.value) // 100
@@ -107,21 +99,28 @@ class VendingMachine:
         self.accountant = Accountant(10, 10)
 
     def buy(self, input_coin: Coin, kind_of_drink: KindOfDrink) -> Drink:
-        # 会計係がお金を受け取る・お釣りを計算する・お釣りを出す
-        # 在庫管理が在庫を確認する・在庫を出す
+        # 使えないお金は、受け取ったお金をそのままお釣りにして終了
         if not self.accountant.is_valid_coin(input_coin):
             self.accountant.add_change(input_coin)
             return None
 
+        # お釣りがない場合は、受け取ったお金をそのままお釣りにして終了
         if not self.accountant.can_return_change(input_coin):
             self.accountant.add_change(input_coin)
             return None
 
+        # 在庫がない場合は、受け取ったお金をそのままお釣りにして終了
         if self.stocks.get_quintity(kind_of_drink) == 0:
             self.accountant.add_change(input_coin)
             return None
 
-        self.accountant.accounting(input_coin) 
+        # お釣りを計算して保持
+        charge_coins = self.accountant.get_charge_coins(input_coin)
+        for coin in charge_coins:
+            self.accountant.add_change(coin)
+
+        # お金を受け取る
+        self.accountant.add_coin(input_coin)
 
         return self.stocks.pick(kind_of_drink)
 
