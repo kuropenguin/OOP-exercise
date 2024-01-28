@@ -1,6 +1,6 @@
 import unittest
-from vending.vending_machine import VendingMachine
-from vending.drink import Drink,KindOfDrink
+from vending.vending_machine import VendingMachine, Stocks , Accountant
+from vending.drink import KindOfDrink
 from vending.coin import Coin
 
 class TestVendingMachine(unittest.TestCase):
@@ -15,13 +15,15 @@ class TestVendingMachine(unittest.TestCase):
 
     def test_out_of_stock(self):
         vm = VendingMachine()
-        vm.quantity_of_coke = 0  # コーラの在庫を0に設定
-        drink = vm.buy(100, KindOfDrink.COKE)
+        # コーラの在庫を0に設定
+        vm.stocks = Stocks(0, 10, 10)
+        drink = vm.buy(Coin.ONE_HUNDRED, KindOfDrink.COKE)
         self.assertIsNone(drink)
 
     def test_insufficient_change(self):
         vm = VendingMachine()
-        vm.number_of_100yen = 0  # 100円玉の在庫を0に設定
+        # 100円玉の在庫を0に設定
+        vm.accountant = Accountant(0, 10)
         drink = vm.buy(Coin.FIVE_HUNDRED, KindOfDrink.COKE)
         self.assertIsNone(drink)
 
