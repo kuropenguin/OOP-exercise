@@ -51,7 +51,7 @@ class VendingMachine:
         self.number_of_100yen = 10
         self.refund_coins = Coins()
 
-    def buy(self, input_coin: Coin, kind_of_drink: KindOfDrink):
+    def buy(self, input_coin: Coin, kind_of_drink: KindOfDrink) -> Drink:
         if not self.__can_use_coin(input_coin):
             self.refund_coins.add(input_coin)
             return None
