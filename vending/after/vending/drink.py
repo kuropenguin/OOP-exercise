@@ -24,5 +24,5 @@ class Drinks:
             return None
         return self.drinks.pop()
 
-    def get_quantity(self):
+    def get_quantity(self) -> int:
         return len(self.drinks)

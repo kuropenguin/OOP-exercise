@@ -17,10 +17,10 @@ class Stock:
             return None
         return self.drinks.pick()
 
-    def get_quantity(self):
+    def get_quantity(self) -> int:
         return self.drinks.get_quantity()
     
-    def __is_same_kind(self, kind_of_drink: KindOfDrink):
+    def __is_same_kind(self, kind_of_drink: KindOfDrink) -> bool:
         if self.get_quantity() == 0:
             return True
         return self.drinks[0].get_kind() == kind_of_drink
@@ -38,12 +38,12 @@ class Stocks:
             return self.diet_coke_stock.pick()
         return self.tea_stock.pick()
     
-    def get_quantity(self, kind_of_drink: KindOfDrink):
+    def get_quantity(self, kind_of_drink: KindOfDrink) -> int:
         if kind_of_drink == KindOfDrink.COKE:
             return self.coke_stock.get_quantity()
         if kind_of_drink == KindOfDrink.DIET_COKE:
             return self.diet_coke_stock.get_quantity()
         return self.tea_stock.get_quantity()
     
-    def is_empty(self, kind_of_drink: KindOfDrink):
+    def is_empty(self, kind_of_drink: KindOfDrink) -> bool:
         return self.get_quantity(kind_of_drink) == 0

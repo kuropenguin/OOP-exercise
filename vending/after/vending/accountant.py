@@ -6,7 +6,7 @@ class Accountant:
         self.five_handread_coins = Coins([Coin.FIVE_HUNDRED for _ in range(quantity_of_500yen)])
         self.charge_coins = Coins()
     
-    def is_valid_coin(self, coin: Coin):
+    def is_valid_coin(self, coin: Coin) -> bool:
         return coin in [Coin.ONE_HUNDRED, Coin.FIVE_HUNDRED]
     
     def can_return_change(self, input_coin: Coin) -> bool:
@@ -16,7 +16,7 @@ class Accountant:
             return self.one_handread_coins.get_amount() >= 400
         return False
     
-    def get_charge_coins(self, input_coin: Coin):
+    def get_charge_coins(self, input_coin: Coin) -> Coins:
         # お釣りを計算して保持
         charge_coins_num = self.calc_charge_one_handread_coins_num(input_coin)
         charge_coins = Coins()
@@ -42,7 +42,7 @@ class Accountant:
         if coin == Coin.FIVE_HUNDRED:
             self.five_handread_coins.add(coin)
             
-    def pop_coin(self, coin: Coin):
+    def pop_coin(self, coin: Coin) -> Coin:
         if coin == Coin.ONE_HUNDRED:
             self.one_handread_coins.pop()
         if coin == Coin.FIVE_HUNDRED:
