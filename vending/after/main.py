@@ -1,3 +1,5 @@
+#参考 https://qiita.com/opengl-8080/items/6f0a458df9c34eccf76c
+
 from vending.drink import Drink
 from vending.vending_machine import VendingMachine
 
