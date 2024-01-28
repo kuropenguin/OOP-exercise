@@ -12,3 +12,17 @@ class Drink:
     def get_kind(self):
         return self.kind
 
+class Drinks:
+    def __init__(self):
+        self.drinks = []
+
+    def add(self, drink: Drink):
+        self.drinks.append(drink)
+    
+    def pick(self) -> Drink:
+        if self.get_quintity() == 0:
+            return None
+        return self.drinks.pop()
+
+    def get_quintity(self):
+        return len(self.drinks)

@@ -1,11 +1,53 @@
-from vending.drink import Drink, KindOfDrink
+from vending.drink import Drink,Drinks, KindOfDrink
 from vending.coin import Coin, Coins
+
+class Stock:
+    def __init__(self, quantity: int, kind_of_drink: KindOfDrink):
+        self.drinks = Drinks()
+        for _ in range(quantity):
+            self.drinks.add(Drink(kind_of_drink))
+
+    def add(self, drink: Drink):
+        if self.__is_same_kind(drink.get_kind()):
+            self.drinks.append(drink)
+        return None
+    
+    def pick(self) -> Drink:
+        if self.get_quintity() == 0:
+            return None
+        return self.drinks.pick()
+
+    def get_quintity(self):
+        return self.drinks.get_quintity()
+    
+    def __is_same_kind(self, kind_of_drink: KindOfDrink):
+        if self.get_quintity() == 0:
+            return True
+        return self.drinks[0].get_kind() == kind_of_drink
+
+class Stocks:
+    def __init__(self):
+        self.coke_stock = Stock(5, KindOfDrink.COKE)
+        self.diet_coke_stock = Stock(5, KindOfDrink.DIET_COKE)
+        self.tea_stock = Stock(5, KindOfDrink.TEA)
+    
+    def pick(self, kind_of_drink: KindOfDrink) -> Drink:
+        if kind_of_drink == KindOfDrink.COKE:
+            return self.coke_stock.pick()
+        if kind_of_drink == KindOfDrink.DIET_COKE:
+            return self.diet_coke_stock.pick()
+        return self.tea_stock.pick()
+    
+    def get_quintity(self, kind_of_drink: KindOfDrink):
+        if kind_of_drink == KindOfDrink.COKE:
+            return self.coke_stock.get_quintity()
+        if kind_of_drink == KindOfDrink.DIET_COKE:
+            return self.diet_coke_stock.get_quintity()
+        return self.tea_stock.get_quintity()
 
 class VendingMachine:
     def __init__(self):
-        self.quantity_of_coke = 5
-        self.quantity_of_diet_coke = 5
-        self.quantity_of_tea = 5
+        self.stocks = Stocks()
         self.number_of_100yen = 10
         self.refund_coins = Coins()
 
@@ -14,9 +56,7 @@ class VendingMachine:
             self.refund_coins.add(input_coin)
             return None
 
-        if (kind_of_drink == KindOfDrink.COKE and self.quantity_of_coke == 0) or \
-           (kind_of_drink == KindOfDrink.DIET_COKE and self.quantity_of_diet_coke == 0) or \
-           (kind_of_drink == KindOfDrink.TEA and self.quantity_of_tea == 0):
+        if self.stocks.get_quintity(kind_of_drink) == 0:
             self.refund_coins.add(input_coin)
             return None
 
@@ -30,16 +70,8 @@ class VendingMachine:
             self.__add_refund_coins(input_coin)
             self.number_of_100yen -= self.__calc_refund_coins_num(input_coin)
 
-        if kind_of_drink == KindOfDrink.COKE:
-            self.quantity_of_coke -= 1
-            return Drink(kind_of_drink)
+        return self.stocks.pick(kind_of_drink)
 
-        if kind_of_drink == KindOfDrink.DIET_COKE:
-            self.quantity_of_diet_coke -= 1
-            return Drink(kind_of_drink)
-
-        self.quantity_of_tea -= 1
-        return Drink(kind_of_drink)
 
 
     def refund(self) -> Coins:
