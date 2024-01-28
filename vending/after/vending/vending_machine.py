@@ -44,6 +44,9 @@ class Stocks:
         if kind_of_drink == KindOfDrink.DIET_COKE:
             return self.diet_coke_stock.get_quintity()
         return self.tea_stock.get_quintity()
+    
+    def is_empty(self, kind_of_drink: KindOfDrink):
+        return self.get_quintity(kind_of_drink) == 0
 
 class Accountant:
     def __init__(self, number_of_100yen: int, number_of_500yen: int):
@@ -110,7 +113,7 @@ class VendingMachine:
             return None
 
         # 在庫がない場合は、受け取ったお金をそのままお釣りにして終了
-        if self.stocks.get_quintity(kind_of_drink) == 0:
+        if self.stocks.is_empty(kind_of_drink):
             self.accountant.add_change(input_coin)
             return None
 
