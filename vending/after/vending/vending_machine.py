@@ -119,7 +119,7 @@ class VendingMachine:
 
         # お釣りを計算して保持
         charge_coins = self.accountant.get_charge_coins(input_coin)
-        for coin in charge_coins:
+        while coin := charge_coins.pop():
             self.accountant.add_change(coin)
 
         # お金を受け取る
