@@ -1,4 +1,5 @@
 from vending.drink import Drink, KindOfDrink
+from vending.coin import Coin 
 
 class VendingMachine:
     def __init__(self):
@@ -8,7 +9,7 @@ class VendingMachine:
         self.number_of_100yen = 10
         self.charge = 0
 
-    def buy(self, input_coin: int, kind_of_drink: KindOfDrink):
+    def buy(self, input_coin: Coin, kind_of_drink: KindOfDrink):
         if not self.__can_use_coin(input_coin):
             self.charge += input_coin
             return None
@@ -19,15 +20,15 @@ class VendingMachine:
             self.charge += input_coin
             return None
 
-        if input_coin == 500 and self.number_of_100yen < 4:
+        if input_coin == Coin.FIVE_HUNDRED and self.number_of_100yen < 4:
             self.charge += input_coin
             return None
 
-        if input_coin == 100:
+        if input_coin == Coin.ONE_HUNDRED:
             self.number_of_100yen += 1
-        if input_coin == 500:
+        if input_coin == Coin.FIVE_HUNDRED:
             self.charge += (input_coin - 100)
-            self.number_of_100yen -= (input_coin - 100) // 100
+            self.number_of_100yen -= (input_coin - Coin.ONE_HUNDRED) // 100
 
         if kind_of_drink == KindOfDrink.COKE:
             self.quantity_of_coke -= 1
@@ -47,4 +48,4 @@ class VendingMachine:
         return result
     
     def __can_use_coin(self, coin):
-        return coin in [100, 500]
+        return coin in [Coin.ONE_HUNDRED, Coin.FIVE_HUNDRED]
