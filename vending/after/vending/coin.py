@@ -13,6 +13,10 @@ class Coins:
         if initial_coins is None:
             initial_coins = []
         self.coins = initial_coins
+        
+    # これがないと for などができない
+    def __iter__(self):
+      return iter(self.coins)
 
     def add(self, coin: Coin):
         self.coins.append(coin)
@@ -25,3 +29,4 @@ class Coins:
 
     def get_quintity(self):
         return len(self.coins)
+
