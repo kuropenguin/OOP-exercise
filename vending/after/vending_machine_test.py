@@ -1,7 +1,9 @@
 import unittest
-from vending.vending_machine import VendingMachine, Stocks , Accountant
+from vending.vending_machine import VendingMachine
 from vending.drink import KindOfDrink
 from vending.coin import Coin
+from vending.accountant import Accountant
+from vending.stock import Stocks
 
 class TestVendingMachine(unittest.TestCase):
 
